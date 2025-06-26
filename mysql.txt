@@ -1,0 +1,40 @@
+-- Create the database (if it doesn’t already exist)
+CREATE DATABASE IF NOT EXISTS student_db;
+USE student_db;
+
+-- Users Table for Login
+CREATE TABLE IF NOT EXISTS users (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(50) NOT NULL,
+    password VARCHAR(100) NOT NULL,
+    UNIQUE(username)
+);
+
+-- Students Table
+CREATE TABLE IF NOT EXISTS students (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    roll_no VARCHAR(20) NOT NULL,
+    UNIQUE(roll_no)
+);
+
+-- Subjects Table
+CREATE TABLE IF NOT EXISTS subjects (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    UNIQUE(name)
+);
+
+-- Marks Table
+CREATE TABLE IF NOT EXISTS marks (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    student_id INT NOT NULL,
+    subject_id INT NOT NULL,
+    assessment VARCHAR(50) NOT NULL,
+    marks DOUBLE NOT NULL,
+    FOREIGN KEY (student_id) REFERENCES students(id) ON DELETE CASCADE,
+    FOREIGN KEY (subject_id) REFERENCES subjects(id) ON DELETE CASCADE
+);
+
+-- Optional: Insert an admin user for testing
+INSERT INTO users (username, password) VALUES ('admin', 'admin123');
